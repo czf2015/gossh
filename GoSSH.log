@@ -1,0 +1,18 @@
+[E]: 2022/09/18 16:51:07.858979 clients.go:157: runtime error: invalid memory address or nil pointer dereference
+[E]: 2022/09/18 16:51:27.572766 clients.go:83: dial tcp: lookup  121.4.112.248: no such host
+[E]: 2022/09/18 16:56:11.898216 clients.go:83: dial tcp: lookup  121.4.112.248: no such host
+[E]: 2022/09/18 17:00:14.868368 clients.go:83: dial tcp: lookup  121.4.112.248: no such host
+[E]: 2022/09/18 17:01:59.892365 clients.go:83: dial tcp: lookup  121.4.112.248: no such host
+[E]: 2022/09/18 17:05:55.762337 clients.go:83: dial tcp: lookup  121.4.112.248: no such host
+[E]: 2022/09/18 17:27:23.336096 clients.go:84: dial tcp: lookup  121.4.112.248: no such host
+[E]: 2022/09/18 17:37:12.844840 clients.go:84: dial tcp: lookup  121.4.112.248: no such host
+[E]: 2022/09/18 17:57:33.313503 clients.go:84: dial tcp: lookup  121.4.112.248: no such host
+[E]: 2022/09/18 18:00:16.632443 clients.go:85: dial tcp: lookup  121.4.112.248: no such host
+[E]: 2022/09/18 18:10:38.695296 clients.go:85: dial tcp: lookup  121.4.112.248: no such host
+[E]: 2022/09/18 18:12:22.177280 clients.go:85: dial tcp: lookup  121.4.112.248: no such host
+[E]: 2022/09/18 18:31:04.011308 clients.go:118: wait: remote command exited without exit status or exit signal
+[E]: 2022/09/18 20:36:04.346094 clients.go:118: wait: remote command exited without exit status or exit signal
+[E]: 2022/09/18 20:36:23.735238 clients.go:85: dial tcp 127.0.0.1:22: connectex: No connection could be made because the target machine actively refused it.
+[E]: 2022/09/18 20:47:40.969644 clients.go:85: dial tcp 127.0.0.1:22: connectex: No connection could be made because the target machine actively refused it.
+[E]: 2022/09/18 20:48:23.863607 clients.go:85: dial tcp [::1]:22: connectex: No connection could be made because the target machine actively refused it.
+[E]: 2022/09/18 20:50:17.179455 clients.go:85: dial tcp [::1]:22: connectex: No connection could be made because the target machine actively refused it.
