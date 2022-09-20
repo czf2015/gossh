@@ -39,7 +39,7 @@ func Run() {
 	// engine.POST("/api/sftp-upload", api.SftpUpload)
 
 	engine.POST("/api/getSessionId", api.GetSessionId)
-	engine.Any("/ws/ssh", api.SshHandler)
+	engine.POST("/ws/ssh", api.SshHandler)
 
 	// 证书加密
 	address := fmt.Sprintf("%s:%s", config.Config["server"]["Address"], config.Config["server"]["Port"])
