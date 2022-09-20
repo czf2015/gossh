@@ -14,7 +14,7 @@ var db *sql.DB
 
 func init() {
 	var err error
-
+	fmt.Println("config.WorkDir is", config.WorkDir)
 	fileInfo, err := os.Stat(config.WorkDir)
 	fmt.Println("fileInfo: ", fileInfo)
 	if os.IsNotExist(err) {
