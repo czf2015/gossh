@@ -45,5 +45,6 @@ const (
 func init() {
 	WorkDir, _ := os.Getwd()
 	fmt.Println("WorkDir: ", WorkDir)
-	Config = configfile.Parse(path.Join(WorkDir, "GoSSH.cnf"))
+	Config = configfile.Parse(path.Join(WorkDir, "config.ini"))
+	fmt.Println("Config: ", Config)
 }
