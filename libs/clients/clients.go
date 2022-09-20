@@ -194,7 +194,7 @@ func ConnectGC() {
 
 	for {
 		time.Sleep(time.Second)
-		duration, _ := time.ParseDuration("-0.2m")
+		duration, _ := time.ParseDuration("-1m")
 		longAgo := time.Now().Add(duration)
 		for key, item := range clients.data {
 			if item.Timeout.Before(longAgo) {
