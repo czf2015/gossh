@@ -3,7 +3,7 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	config "gossh/config/v1"
+	"gossh/config/v1"
 	"gossh/libs/logger"
 	"io/fs"
 	"os"
@@ -15,6 +15,7 @@ var db *sql.DB
 func init() {
 	var err error
 	fmt.Println("config.WorkDir is", config.WorkDir)
+	fmt.Println("config.Config is", config.Config)
 	fileInfo, err := os.Stat(config.WorkDir)
 	fmt.Println("fileInfo: ", fileInfo)
 	if os.IsNotExist(err) {
