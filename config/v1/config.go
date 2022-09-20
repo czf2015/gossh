@@ -45,6 +45,6 @@ const (
 func init() {
 	WorkDir, _ := os.Getwd()
 	fmt.Println("WorkDir: ", WorkDir)
-	Config = configfile.Parse(path.Join(WorkDir, "config.ini"))
+	Config = configfile.Parse(path.Join(WorkDir, "/config/v1/config.ini"))
 	fmt.Println("Config: ", Config)
 }
