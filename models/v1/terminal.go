@@ -4,7 +4,7 @@ import (
 	"gossh/libs/db"
 )
 
-type Host struct {
+type Terminal struct {
 	Id          int    `json:"id"`
 	Name        string `json:"name"`
 	Address     string `json:"address"`
@@ -20,26 +20,26 @@ type Host struct {
 	Shell       string `json:"shell"`
 }
 
-func (host *Host) Select() ([]Host, error) {
-	rows, err := db.GetDB().Query(`select Id, Name, Address, User, Pwd, Port,FontSize, Background, Foreground, CursorColor, FontFamily, CursorStyle, Shell from host`)
-	var hostList []Host
+func (terminal *Terminal) Select() ([]Terminal, error) {
+	rows, err := db.GetDB().Query(`select Id, Name, Address, User, Pwd, Port,FontSize, Background, Foreground, CursorColor, FontFamily, CursorStyle, Shell from terminal`)
+	var terminalList []Terminal
 	if err != nil {
-		return hostList, err
+		return terminalList, err
 	}
 	for rows.Next() {
-		var h = new(Host)
+		var h = new(Terminal)
 		err = rows.Scan(&h.Id, &h.Name, &h.Address, &h.User, &h.Pwd, &h.Port, &h.FontSize, &h.Background, &h.Foreground, &h.CursorColor, &h.FontFamily, &h.CursorStyle, &h.Shell)
 		if err != nil {
-			return hostList, err
+			return terminalList, err
 		}
-		hostList = append(hostList, *h)
+		terminalList = append(terminalList, *h)
 	}
 	_ = rows.Close()
-	return hostList, nil
+	return terminalList, nil
 }
 
-func (host *Host) Insert(name, address, user, pwd string, port, fontSize int, background, foreground, cursorColor, fontFamily, cursorStyle, shell string) (int64, error) {
-	insertSql := `INSERT INTO host(Name, Address, User, Pwd, Port, FontSize, Background, Foreground, CursorColor, FontFamily, CursorStyle, Shell)  values(?,?,?,?,?,?,?,?,?,?,?,?)`
+func (terminal *Terminal) Insert(name, address, user, pwd string, port, fontSize int, background, foreground, cursorColor, fontFamily, cursorStyle, shell string) (int64, error) {
+	insertSql := `INSERT INTO terminal(Name, Address, User, Pwd, Port, FontSize, Background, Foreground, CursorColor, FontFamily, CursorStyle, Shell)  values(?,?,?,?,?,?,?,?,?,?,?,?)`
 	stmt, err := db.GetDB().Prepare(insertSql)
 	if err != nil {
 		return 0, err
@@ -55,9 +55,9 @@ func (host *Host) Insert(name, address, user, pwd string, port, fontSize int, ba
 	return id, err
 }
 
-func (host *Host) Update(id int, name, address, user, pwd string, port, fontSize int, background, foreground, cursorColor, fontFamily, cursorStyle, shell string) (int64, error) {
+func (terminal *Terminal) Update(id int, name, address, user, pwd string, port, fontSize int, background, foreground, cursorColor, fontFamily, cursorStyle, shell string) (int64, error) {
 
-	stmt, err := db.GetDB().Prepare(`update host set Name=?, Address=?, User=?, Pwd=?, Port=?, FontSize=?, Background=?, Foreground=?, CursorColor=?, FontFamily=?, CursorStyle=?, Shell=?  where id=?`)
+	stmt, err := db.GetDB().Prepare(`update terminal set Name=?, Address=?, User=?, Pwd=?, Port=?, FontSize=?, Background=?, Foreground=?, CursorColor=?, FontFamily=?, CursorStyle=?, Shell=?  where id=?`)
 	if err != nil {
 		return 0, err
 	}
@@ -72,8 +72,8 @@ func (host *Host) Update(id int, name, address, user, pwd string, port, fontSize
 	return affect, err
 }
 
-func (host *Host) Delete(id int) (int64, error) {
-	stmt, err := db.GetDB().Prepare(`delete from host where id=?`)
+func (terminal *Terminal) Delete(id int) (int64, error) {
+	stmt, err := db.GetDB().Prepare(`delete from terminal where id=?`)
 	if err != nil {
 		return 0, err
 	}

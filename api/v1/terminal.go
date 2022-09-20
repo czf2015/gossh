@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-func VerifyHost(c *gin.Context) (models.Host, error) {
+func VerifyTerminal(c *gin.Context) (models.Terminal, error) {
 	name := c.PostForm("name")
 	address := c.PostForm("address")
 	user := c.PostForm("user")
@@ -26,26 +26,26 @@ func VerifyHost(c *gin.Context) (models.Host, error) {
 	shell := c.PostForm("shell")
 
 	if len(name) > 60 || len(name) == 0 {
-		return models.Host{}, fmt.Errorf("name input error:%s.", name)
+		return models.Terminal{}, fmt.Errorf("name input error:%s.", name)
 	}
 
 	if len(address) > 60 || len(address) == 0 {
-		return models.Host{}, fmt.Errorf("host input error")
+		return models.Terminal{}, fmt.Errorf("terminal input error")
 	}
 
 	if len(user) > 60 || len(user) == 0 {
-		return models.Host{}, fmt.Errorf("user input error")
+		return models.Terminal{}, fmt.Errorf("user input error")
 	}
 
 	if len(pwd) > 60 || len(pwd) == 0 {
-		return models.Host{}, fmt.Errorf("pwd input error")
+		return models.Terminal{}, fmt.Errorf("pwd input error")
 	}
 	p, err := strconv.Atoi(strings.TrimSpace(port))
 	if err != nil {
-		return models.Host{}, fmt.Errorf("port input error")
+		return models.Terminal{}, fmt.Errorf("port input error")
 	}
 	if p > 65535 || p < 1 {
-		return models.Host{}, fmt.Errorf("port range input error")
+		return models.Terminal{}, fmt.Errorf("port range input error")
 	}
 
 	fontsize, err := strconv.Atoi(strings.TrimSpace(fontSize))
@@ -79,7 +79,7 @@ func VerifyHost(c *gin.Context) (models.Host, error) {
 		shell = "bash"
 	}
 
-	hostInfo := models.Host{
+	terminal := models.Terminal{
 		Name:        name,
 		Address:     address,
 		User:        user,
@@ -93,37 +93,37 @@ func VerifyHost(c *gin.Context) (models.Host, error) {
 		CursorStyle: cursorStyle,
 		Shell:       shell,
 	}
-	return hostInfo, nil
+	return terminal, nil
 }
 
-func GetAllHost(c *gin.Context) {
-	var host *models.Host
-	allHost, err := host.Select()
+func GetAllTerminals(c *gin.Context) {
+	var terminal *models.Terminal
+	allTerminal, err := terminal.Select()
 	if err != nil {
 		c.JSON(500, gin.H{"code": config.FAILURE, "msg": err.Error()})
 		return
 	}
-	c.JSON(200, gin.H{"code": config.SUCCEED, "data": allHost, "msg": "ok"})
+	c.JSON(200, gin.H{"code": config.SUCCEED, "data": allTerminal, "msg": "ok"})
 }
 
-func AddHost(c *gin.Context) {
-	var host *models.Host
-	h, err := VerifyHost(c)
+func AddTerminal(c *gin.Context) {
+	var terminal *models.Terminal
+	h, err := VerifyTerminal(c)
 	if err != nil {
 		c.JSON(400, gin.H{"code": config.FAILURE, "msg": err.Error()})
 		return
 	}
-	_, err = host.Insert(h.Name, h.Address, h.User, h.Pwd, h.Port, h.FontSize, h.Background, h.Foreground, h.CursorColor, h.FontFamily, h.CursorStyle, h.Shell)
+	_, err = terminal.Insert(h.Name, h.Address, h.User, h.Pwd, h.Port, h.FontSize, h.Background, h.Foreground, h.CursorColor, h.FontFamily, h.CursorStyle, h.Shell)
 	if err != nil {
 		c.JSON(500, gin.H{"code": config.FAILURE, "msg": err.Error()})
 		return
 	}
-	GetAllHost(c)
+	GetAllTerminals(c)
 }
 
-func UpdateHost(c *gin.Context) {
-	var host *models.Host
-	h, err := VerifyHost(c)
+func UpdateTerminal(c *gin.Context) {
+	var terminal *models.Terminal
+	h, err := VerifyTerminal(c)
 	if err != nil {
 		c.JSON(400, gin.H{"code": config.FAILURE, "msg": err.Error()})
 		return
@@ -134,40 +134,36 @@ func UpdateHost(c *gin.Context) {
 		return
 	}
 
-	_, err = host.Update(id, h.Name, h.Address, h.User, h.Pwd, h.Port, h.FontSize, h.Background, h.Foreground, h.CursorColor, h.FontFamily, h.CursorStyle, h.Shell)
+	_, err = terminal.Update(id, h.Name, h.Address, h.User, h.Pwd, h.Port, h.FontSize, h.Background, h.Foreground, h.CursorColor, h.FontFamily, h.CursorStyle, h.Shell)
 	if err != nil {
 		c.JSON(500, gin.H{"code": config.FAILURE, "msg": err.Error()})
 		return
 	}
-	GetAllHost(c)
+	GetAllTerminals(c)
 }
 
-func DeleteHost(c *gin.Context) {
-	var host *models.Host
+func DeleteTerminal(c *gin.Context) {
+	var terminal *models.Terminal
 	id, err := strconv.Atoi(strings.TrimSpace(c.PostForm("id")))
 	if err != nil {
 		c.JSON(400, gin.H{"code": config.FAILURE, "msg": err.Error()})
 		return
 	}
-	_, err = host.Delete(id)
+	_, err = terminal.Delete(id)
 	if err != nil {
 		c.JSON(500, gin.H{"code": config.FAILURE, "msg": err.Error()})
 		return
 	}
-	GetAllHost(c)
+	GetAllTerminals(c)
 }
 
 func GetSessionId(c *gin.Context) {
-	h, err := VerifyHost(c)
+	h, err := VerifyTerminal(c)
 	if err != nil {
 		c.JSON(400, gin.H{"code": config.FAILURE, "msg": err.Error()})
 		return
 	}
 	sessionId := utils.RandString(15)
-	client := NewClient(h.Address, h.User, h.Pwd, h.Port, h.Shell, sessionId)
-
-	clients.Lock()
-	clients.SetData(sessionId, client)
-	clients.Unlock()
+	clients.AddData(h.Address, h.User, h.Pwd, h.Port, h.Shell, sessionId)
 	c.JSON(200, gin.H{"code": config.SUCCEED, "data": sessionId, "msg": "ok"})
 }

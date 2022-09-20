@@ -138,6 +138,23 @@ func SetData(sessionId string, client *Ssh) {
 	clients.data[sessionId] = client
 }
 
+func AddData(ip string, username string, password string, port int, shell, sessionId string) {
+	now := time.Now()
+	clientsSsh := &Ssh{
+		IP:        ip,
+		Username:  username,
+		Password:  password,
+		Port:      port,
+		Shell:     shell,
+		SessionId: sessionId,
+		Timeout:   now,
+		StartTime: now,
+	}
+	clients.lock.Lock()
+	clients.data[sessionId] = clientsSsh
+	clients.lock.Unlock()
+}
+
 func Lock() {
 	clients.lock.Lock()
 }

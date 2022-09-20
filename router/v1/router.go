@@ -22,24 +22,23 @@ func Run() {
 		c.Redirect(http.StatusMovedPermanently, "/gogossh/")
 	})
 
-	engine.POST("/api/login", api.Login)
-	engine.PATCH("/api/revise-password", api.RevisePassword)
+	// engine.POST("/api/login", api.Login)
+	// engine.PATCH("/api/revise-password", api.RevisePassword)
 
-	engine.GET("/api/ssh/status", api.GetSshStatus)
-	engine.POST("/api/ssh/status", api.UpdateSshStatus)
-	engine.DELETE("/api/ssh/status", api.DeleteSshConnect)
+	// engine.GET("/api/ssh/status", api.GetSshStatus)
+	// engine.POST("/api/ssh/status", api.UpdateSshStatus)
+	// engine.DELETE("/api/ssh/status", api.DeleteSshConnect)
 
-	engine.GET("/api/host", api.GetAllHost)
-	engine.POST("/api/host", api.AddHost)
-	engine.PUT("/api/host", api.UpdateHost)
-	engine.DELETE("/api/host", api.DeleteHost)
+	// engine.GET("/api/terminal", api.GetAllTerminals)
+	// engine.POST("/api/terminal", api.AddTerminal)
+	// engine.PATCH("/api/terminal", api.UpdateTerminal)
+	// engine.DELETE("/api/terminal", api.DeleteTerminal)
+
+	// engine.GET("/api/sftp-dir", api.SftpDir)
+	// engine.POST("/api/sftp-download", api.SftpDownload)
+	// engine.POST("/api/sftp-upload", api.SftpUpload)
 
 	engine.POST("/api/getSessionId", api.GetSessionId)
-
-	engine.GET("/api/sftp-dir", api.SftpDir)
-	engine.POST("/api/sftp-download", api.SftpDownload)
-	engine.POST("/api/sftp-upload", api.SftpUpload)
-
 	engine.Any("/ws/ssh", api.SshHandler)
 
 	// 证书加密
