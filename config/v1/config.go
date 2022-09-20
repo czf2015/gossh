@@ -6,8 +6,6 @@ import (
 	"path"
 )
 
-var ProjectName = "gossh"
-
 var WorkDir string
 
 var Config map[string]map[string]string

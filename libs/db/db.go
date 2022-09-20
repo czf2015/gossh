@@ -16,6 +16,7 @@ func init() {
 	var err error
 
 	fileInfo, err := os.Stat(config.WorkDir)
+	fmt.Println("fileInfo: ", fileInfo)
 	if os.IsNotExist(err) {
 		err = os.Mkdir(config.WorkDir, fs.ModePerm)
 		if err != nil {
