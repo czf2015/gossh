@@ -100,13 +100,13 @@ func (s *Ssh) RunTerminal(shell string, stdout, stderr io.Writer, stdin io.Reade
 
 	sshSession, err := s.SshClient.NewSession()
 	if err != nil {
+		s.SshClient.Close()
 		logger.Logger.Error(err.Error())
 		return err
 	}
-	defer func() {
-		DeleteClientBySessionID((s.SessionId))
-		sshSession.Close()
-	}()
+	// defer func() {
+	// 	DeleteClientBySessionID((s.SessionId))
+	// }()
 
 	sshSession.Stdout = stdout
 	sshSession.Stderr = stderr
@@ -206,7 +206,7 @@ func ConnectGC() {
 				fmt.Println(item.SshSession)
 				fmt.Println("item.Ws:")
 				fmt.Println(item.Ws)
-				// item.SshSession.Close()
+				item.SshSession.Close()
 				item.SshClient.Close()
 				item.SftpClient.Close()
 				item.Ws.Close()
