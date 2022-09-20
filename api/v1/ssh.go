@@ -61,8 +61,6 @@ func GetSshStatus(c *gin.Context) {
 // POST 更新已经连接的主机信息
 func UpdateSshStatus(c *gin.Context) {
 	ids := c.PostFormArray("ids")
-	clients.Lock()
-	defer clients.Unlock()
 	for _, key := range ids {
 		val, ok := clients.GetClientBySessionID(key)
 		if ok {
@@ -105,7 +103,7 @@ func DeleteSshConnect(c *gin.Context) {
 		return
 	}
 
-	sshConn, ok := clients.GetData()[sessionId]
+	sshConn, ok := clients.GetClientBySessionID(sessionId)
 	if ok {
 		sshConn.SshClient.Close()
 		sshConn.SftpClient.Close()

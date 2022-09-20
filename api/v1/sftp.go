@@ -14,9 +14,7 @@ import (
 func SftpDir(c *gin.Context) {
 	dirPath := c.Query("path")
 	sessionId := c.Query("session_id")
-	clients.RLock()
-	defer clients.RUnlock()
-	cli, ok := clients.GetData()[sessionId]
+	cli, ok := clients.GetClientBySessionID(sessionId)
 	if !ok {
 		c.JSON(400, gin.H{"code": config.FAILURE, "msg": "sftpClient error"})
 		return
@@ -88,9 +86,7 @@ func SftpDir(c *gin.Context) {
 func SftpDownload(c *gin.Context) {
 	sessionId := c.PostForm("session_id")
 	fullPath := c.PostForm("path")
-	clients.RLock()
-	defer clients.RUnlock()
-	cli, ok := clients.GetData()[sessionId]
+	cli, ok := clients.GetClientBySessionID(sessionId)
 	if ok {
 		file, _ := cli.SftpClient.Open(fullPath)
 		defer func() {
@@ -107,10 +103,8 @@ func SftpUpload(c *gin.Context) {
 	//获取上传的文件组
 	files := c.Request.MultipartForm.File["file"]
 
-	clients.RLock()
-	defer clients.RUnlock()
 	for _, file := range files {
-		cli, ok := clients.GetData()[sessionId]
+		cli, ok := clients.GetClientBySessionID(sessionId)
 		if ok {
 			srcFile, _ := file.Open()
 			dstFile, _ := cli.SftpClient.Create(path.Join(dstPath, file.Filename))
