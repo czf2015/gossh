@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"gossh/config/v1"
 	"gossh/libs/logger"
+	"io/fs"
 	"os"
 	"path"
 )
@@ -14,32 +15,30 @@ var db *sql.DB
 func init() {
 	var err error
 
-	db, err = sql.Open("sqlite3", path.Join(config.WorkDir, config.ProjectName+".db"))
+	fileInfo, err := os.Stat(config.WorkDir)
+	if os.IsNotExist(err) {
+		err = os.Mkdir(config.WorkDir, fs.ModePerm)
+		if err != nil {
+			logger.Logger.Error(fmt.Sprintf("创建目录:%s 失败,%s\n", config.WorkDir, err))
+			os.Exit(1)
+			return
+		}
+	} else {
+		if !fileInfo.IsDir() {
+			logger.Logger.Error(fmt.Sprintf("请删除:%s文件\n", config.WorkDir))
+			os.Exit(1)
+			return
+		}
+	}
+
+	db, err = sql.Open("sqlite3", path.Join(config.WorkDir, config.Config["app"]["AppName"]+".db"))
 	if err != nil {
-		logger.Logger.Error(fmt.Sprintf("创建数据库文件:%s失败\n", path.Join(config.WorkDir, config.ProjectName+".db")))
+		logger.Logger.Error(fmt.Sprintf("创建数据库文件:%s失败\n", path.Join(config.WorkDir, config.Config["app"]["AppName"]+".db")))
 		os.Exit(1)
 		return
 	}
 
-	// fileInfo, err := os.Stat(config.WorkDir)
-
-	// if os.IsNotExist(err) {
-	// 	err = os.Mkdir(config.WorkDir, fs.ModePerm)
-	// 	if err != nil {
-	// 		logger.Logger.Error(fmt.Sprintf("创建目录:%s 失败,%s\n", config.WorkDir, err))
-	// 		os.Exit(1)
-	// 		return
-	// 	}
-
-	// } else {
-	// 	if !fileInfo.IsDir() {
-	// 		logger.Logger.Error(fmt.Sprintf("请删除:%s文件\n", config.WorkDir))
-	// 		os.Exit(1)
-	// 		return
-	// 	}
-	// }
-
-	// configFilePath := path.Join(config.WorkDir, config.ProjectName+".cnf")
+	// configFilePath := path.Join(config.WorkDir, config.Config["app"]["AppName"]+".cnf")
 	// _, err = os.Stat(configFilePath)
 	// if os.IsNotExist(err) {
 	// 	file, err := os.Create(configFilePath)
