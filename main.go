@@ -3,7 +3,6 @@ package main
 import (
 	_ "github.com/mattn/go-sqlite3"
 
-	"gossh/libs/clients"
 	"gossh/libs/logger"
 	router "gossh/router/v1"
 )
@@ -14,6 +13,6 @@ func main() {
 			logger.Logger.Emergency(err)
 		}
 	}()
-	go clients.ConnectGC()
+	// go clients.ConnectGC()
 	router.Run()
 }
