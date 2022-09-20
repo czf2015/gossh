@@ -1,9 +1,7 @@
 package config
 
 import (
-	"fmt"
 	"gossh/libs/configfile"
-	"gossh/libs/logger"
 	"os"
 	"path"
 )
@@ -18,10 +16,7 @@ const (
 )
 
 func init() {
-	WorkDir, err := os.Getwd()
-	if err != nil {
-		logger.Logger.Error(fmt.Sprintf("获取运行目录:%s 失败", err))
-	}
+	WorkDir, _ = os.Getwd()
 	configFilePath := path.Join(WorkDir, "/config/v1/config.ini")
 	Config = configfile.Parse(configFilePath)
 }
