@@ -194,11 +194,16 @@ func ConnectGC() {
 
 	for {
 		time.Sleep(time.Second)
-		duration, _ := time.ParseDuration("-0.2m")
+		duration, _ := time.ParseDuration("-1m")
 		longAgo := time.Now().Add(duration)
 		for key, item := range clients.data {
 			if item.Timeout.Before(longAgo) {
-				fmt.Println("xxxxxxxx")
+				fmt.Println("item.SshClient")
+				fmt.Println(item.SshClient)
+				fmt.Println("item.SftpClient:")
+				fmt.Println(item.SftpClient)
+				fmt.Println("item.SshSession:")
+				fmt.Println(item.SshSession)
 				item.SshClient.Close()
 				item.SftpClient.Close()
 				item.SshSession.Close()
