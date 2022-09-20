@@ -130,7 +130,16 @@ var clients = Clients{
 	data: make(map[string]*Ssh),
 }
 
+func GetClientBySessionID(sessionID string) (*Ssh, bool) {
+	clients.lock.RLock()
+	defer clients.lock.RUnlock()
+	client, err := clients.data[sessionID]
+	return client, err
+}
+
 func GetData() map[string]*Ssh {
+	clients.lock.RLock()
+	defer clients.lock.RUnlock()
 	return clients.data
 }
 
@@ -153,6 +162,13 @@ func AddData(ip string, username string, password string, port int, shell, sessi
 	clients.lock.Lock()
 	clients.data[sessionId] = clientsSsh
 	clients.lock.Unlock()
+}
+
+func DeleteClientBySessionID(sessionId string) error {
+	clients.lock.Lock()
+	defer clients.lock.Unlock()
+	delete(clients.data, sessionId)
+	return nil
 }
 
 func Lock() {
@@ -189,9 +205,7 @@ func ConnectGC() {
 				item.SftpClient.Close()
 				item.SshSession.Close()
 				item.Ws.Close()
-				clients.lock.Lock()
-				delete(clients.data, key)
-				clients.lock.Unlock()
+				DeleteClientBySessionID(key)
 			}
 		}
 	}

@@ -64,7 +64,7 @@ func UpdateSshStatus(c *gin.Context) {
 	clients.Lock()
 	defer clients.Unlock()
 	for _, key := range ids {
-		val, ok := clients.GetData()[key]
+		val, ok := clients.GetClientBySessionID(key)
 		if ok {
 			val.Timeout = time.Now()
 		}
@@ -111,28 +111,13 @@ func DeleteSshConnect(c *gin.Context) {
 		sshConn.SftpClient.Close()
 		sshConn.SshSession.Close()
 		sshConn.Ws.Close()
-		clients.Lock()
-		delete(clients.GetData(), sessionId)
-		clients.Unlock()
+		clients.DeleteClientBySessionID(sessionId)
 	}
 
 	c.JSON(200, gin.H{
 		"code": config.SUCCEED,
 		"msg":  "delete connect success",
 	})
-}
-
-func NewClient(ip string, username string, password string, port int, shell, sessionId string) *clients.Ssh {
-	sshClient := new(clients.Ssh)
-	sshClient.IP = ip
-	sshClient.Username = username
-	sshClient.Password = password
-	sshClient.Port = port
-	sshClient.Shell = shell
-	sshClient.SessionId = sessionId
-	sshClient.Timeout = time.Now()
-	sshClient.StartTime = time.Now()
-	return sshClient
 }
 
 func SshHandler(c *gin.Context) {
@@ -151,32 +136,24 @@ func SshHandler(c *gin.Context) {
 		w, err := strconv.Atoi(ws.Request().URL.Query().Get("w"))
 		if err != nil || (w < 40 || w > 8192) {
 			websocket.Message.Send(ws, "connect error window width !!!")
-			clients.Lock()
-			delete(clients.GetData(), sessionId)
-			clients.Unlock()
+			clients.DeleteClientBySessionID(sessionId)
 			ws.Close()
 			return
 		}
 		h, err := strconv.Atoi(ws.Request().URL.Query().Get("h"))
 		if err != nil || (h < 2 || h > 4096) {
 			websocket.Message.Send(ws, "connect error window height !!!")
-			clients.Lock()
-			delete(clients.GetData(), sessionId)
-			clients.Unlock()
+			clients.DeleteClientBySessionID(sessionId)
 			ws.Close()
 			return
 		}
 
-		clients.RLock()
-		cli := clients.GetData()[sessionId]
-		clients.RUnlock()
+		cli, _ := clients.GetClientBySessionID(sessionId)
 
 		err = cli.RunTerminal(cli.Shell, ws, ws, ws, w, h, ws)
 		if err != nil {
 			websocket.Message.Send(ws, "connect error!!!")
-			clients.Lock()
-			delete(clients.GetData(), sessionId)
-			clients.Unlock()
+			clients.DeleteClientBySessionID(sessionId)
 			ws.Close()
 			return
 		}
@@ -202,9 +179,7 @@ func Resize(c *gin.Context) {
 
 	sessionId := c.Query("session_id")
 
-	clients.RLock()
-	cli, ok := clients.GetData()[sessionId]
-	clients.RUnlock()
+	cli, ok := clients.GetClientBySessionID((sessionId))
 
 	if !ok || cli == nil {
 		c.JSON(299, gin.H{"code": config.FAILURE, "msg": "the client is disconnected"})

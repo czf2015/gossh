@@ -98,12 +98,12 @@ func VerifyTerminal(c *gin.Context) (models.Terminal, error) {
 
 func GetAllTerminals(c *gin.Context) {
 	var terminal *models.Terminal
-	allTerminal, err := terminal.Select()
+	allTerminals, err := terminal.Select()
 	if err != nil {
 		c.JSON(500, gin.H{"code": config.FAILURE, "msg": err.Error()})
 		return
 	}
-	c.JSON(200, gin.H{"code": config.SUCCEED, "data": allTerminal, "msg": "ok"})
+	c.JSON(200, gin.H{"code": config.SUCCEED, "data": allTerminals, "msg": "ok"})
 }
 
 func AddTerminal(c *gin.Context) {
