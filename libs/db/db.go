@@ -3,7 +3,7 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"gossh/config/v1"
+	config "gossh/config/v1"
 	"gossh/libs/logger"
 	"io/fs"
 	"os"
