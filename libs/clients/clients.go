@@ -76,49 +76,6 @@ func (s *Ssh) connect() error {
 	return nil
 }
 
-// RunTerminal 运行一个终端
-func (s *Ssh) RunTerminal(shell string, stdout, stderr io.Writer, stdin io.Reader, w, h int, ws *websocket.Conn) error {
-	if s.SshClient == nil {
-		if err := s.connect(); err != nil {
-			logger.Logger.Error(err)
-			return err
-		}
-	}
-
-	sshSession, err := s.SshClient.NewSession()
-	if err != nil {
-		logger.Logger.Error(err.Error())
-		return err
-	}
-
-	s.SshSession = sshSession
-	s.Ws = ws
-
-	defer func() {
-		clients.lock.Lock()
-		delete(clients.data, s.SessionId)
-		clients.lock.Unlock()
-		_ = sshSession.Close()
-	}()
-
-	sshSession.Stdout = stdout
-	sshSession.Stderr = stderr
-	sshSession.Stdin = stdin
-
-	modes := ssh.TerminalModes{}
-
-	if err := sshSession.RequestPty("xterm-256color", h, w, modes); err != nil {
-		return err
-	}
-
-	err = sshSession.Run(shell)
-	if err != nil {
-		logger.Logger.Error(err.Error())
-		return err
-	}
-	return nil
-}
-
 // Clients 存储的客户端信息
 type Clients struct {
 	lock sync.RWMutex
@@ -128,6 +85,46 @@ type Clients struct {
 var clients = Clients{
 	lock: sync.RWMutex{},
 	data: make(map[string]*Ssh),
+}
+
+// RunTerminal 运行一个终端
+func (s *Ssh) RunTerminal(shell string, stdout, stderr io.Writer, stdin io.Reader, w, h int, ws *websocket.Conn) error {
+	if s.SshClient == nil {
+		if err := s.connect(); err != nil {
+			logger.Logger.Error(err)
+			return err
+		}
+	}
+
+	s.Ws = ws
+
+	sshSession, err := s.SshClient.NewSession()
+	if err != nil {
+		logger.Logger.Error(err.Error())
+		return err
+	}
+	defer func() {
+		DeleteClientBySessionID((s.SessionId))
+		sshSession.Close()
+	}()
+
+	sshSession.Stdout = stdout
+	sshSession.Stderr = stderr
+	sshSession.Stdin = stdin
+	s.SshSession = sshSession
+
+	modes := ssh.TerminalModes{}
+	if err := sshSession.RequestPty("xterm-256color", h, w, modes); err != nil {
+		return err
+	}
+
+	err = sshSession.Run(shell)
+	if err != nil {
+		logger.Logger.Error(err.Error())
+		return err
+	}
+
+	return nil
 }
 
 func GetClientBySessionID(sessionID string) (*Ssh, bool) {
@@ -197,10 +194,11 @@ func ConnectGC() {
 
 	for {
 		time.Sleep(time.Second)
-		duration, _ := time.ParseDuration("-1m")
+		duration, _ := time.ParseDuration("-0.2m")
 		longAgo := time.Now().Add(duration)
 		for key, item := range clients.data {
 			if item.Timeout.Before(longAgo) {
+				fmt.Println("xxxxxxxx")
 				item.SshClient.Close()
 				item.SftpClient.Close()
 				item.SshSession.Close()
