@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"gossh/libs/configfile"
 	"gossh/utils"
 	"os"
 	"path"
@@ -10,15 +9,15 @@ import (
 
 var userHomeDir, _ = os.UserHomeDir()
 
-var ProjectName = "GoWebSSH"
+var ProjectName = "GoSSH"
 
-// WorkDir 程序默认工作目录,在用户的home目录下 .GoWebSSH 目录
+// WorkDir 程序默认工作目录,在用户的home目录下 .GoSSH 目录
 var WorkDir = path.Join(userHomeDir, fmt.Sprintf("/.%s/", ProjectName))
 
 // Config 默认配置,当配置文件不存在的时候,就使用这个默认配置
 var Config = map[string]map[string]string{
 	"app": {
-		"AppName": "GoWebSSH",
+		"AppName": "GoSSH",
 	},
 	"server": {
 		"Address":  "0.0.0.0",
@@ -43,6 +42,6 @@ const (
 	FAILURE = 1
 )
 
-func init() {
-	Config = configfile.Parse(path.Join(WorkDir, "GoWebSSH.cnf"))
-}
+// func init() {
+// 	Config = configfile.Parse(path.Join(WorkDir, "GoSSH.cnf"))
+// }
