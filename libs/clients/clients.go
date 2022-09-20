@@ -186,30 +186,30 @@ func RUnlock() {
 
 // ConnectGC 清理已经断开的连接
 func ConnectGC() {
-	defer func() {
-		if err := recover(); err != nil {
-			logger.Logger.Error(err)
-		}
-	}()
+	// defer func() {
+	// 	if err := recover(); err != nil {
+	// 		logger.Logger.Error(err)
+	// 	}
+	// }()
 
-	for {
-		time.Sleep(time.Second)
-		duration, _ := time.ParseDuration("-1m")
-		longAgo := time.Now().Add(duration)
-		for key, item := range clients.data {
-			if item.Timeout.Before(longAgo) {
-				fmt.Println("item.SshClient")
-				fmt.Println(item.SshClient)
-				fmt.Println("item.SftpClient:")
-				fmt.Println(item.SftpClient)
-				fmt.Println("item.SshSession:")
-				fmt.Println(item.SshSession)
-				item.SshClient.Close()
-				item.SftpClient.Close()
-				item.SshSession.Close()
-				item.Ws.Close()
-				DeleteClientBySessionID(key)
-			}
-		}
-	}
+	// for {
+	// 	time.Sleep(time.Second)
+	// 	duration, _ := time.ParseDuration("-0.2m")
+	// 	longAgo := time.Now().Add(duration)
+	// 	for key, item := range clients.data {
+	// 		if item.Timeout.Before(longAgo) {
+	// 			fmt.Println("item.SshClient")
+	// 			fmt.Println(item.SshClient)
+	// 			fmt.Println("item.SftpClient:")
+	// 			fmt.Println(item.SftpClient)
+	// 			fmt.Println("item.SshSession:")
+	// 			fmt.Println(item.SshSession)
+	// 			item.SshClient.Close()
+	// 			item.SftpClient.Close()
+	// 			item.SshSession.Close()
+	// 			item.Ws.Close()
+	// 			DeleteClientBySessionID(key)
+	// 		}
+	// 	}
+	// }
 }
