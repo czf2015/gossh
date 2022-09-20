@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"gossh/libs/configfile"
 	"os"
 	"path"
@@ -17,6 +18,7 @@ const (
 
 func init() {
 	WorkDir, _ := os.Getwd()
+	fmt.Println("WorkDir: ", WorkDir)
 	configFilePath := path.Join(WorkDir, "/config/v1/config.ini")
 	Config = configfile.Parse(configFilePath)
 }
