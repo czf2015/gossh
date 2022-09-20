@@ -204,6 +204,8 @@ func ConnectGC() {
 				fmt.Println(item.SftpClient)
 				fmt.Println("item.SshSession:")
 				fmt.Println(item.SshSession)
+				fmt.Println("item.Ws:")
+				fmt.Println(item.Ws)
 				item.SshClient.Close()
 				item.SftpClient.Close()
 				item.Ws.Close()
