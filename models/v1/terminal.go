@@ -11,13 +11,13 @@ type Terminal struct {
 	User        string `json:"user"`
 	Pwd         string `json:"pwd"`
 	Port        int    `json:"port"`
-	FontSize    int    `json:"font_size"`
-	Background  string `json:"background"`
-	Foreground  string `json:"foreground"`
-	CursorColor string `json:"cursor_color"`
-	FontFamily  string `json:"font_family"`
-	CursorStyle string `json:"cursor_style"`
 	Shell       string `json:"shell"`
+	FontFamily  string `json:"font_family"`
+	FontSize    int    `json:"font_size"`
+	Foreground  string `json:"foreground"`
+	Background  string `json:"background"`
+	CursorColor string `json:"cursor_color"`
+	CursorStyle string `json:"cursor_style"`
 }
 
 func (terminal *Terminal) Select() ([]Terminal, error) {

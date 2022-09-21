@@ -7,92 +7,98 @@ import (
 	"gossh/libs/gin"
 	models "gossh/models/v1"
 	"gossh/utils"
+	"net/http"
 	"strconv"
 	"strings"
 )
 
 func VerifyTerminal(c *gin.Context) (models.Terminal, error) {
-	name := c.PostForm("name")
-	address := c.PostForm("address")
-	user := c.PostForm("user")
-	pwd := c.PostForm("pwd")
-	port := c.PostForm("port")
-	fontSize := c.PostForm("font_size")
-	background := c.PostForm("background")
-	foreground := c.PostForm("foreground")
-	cursorColor := c.PostForm("cursor_color")
-	fontFamily := c.PostForm("font_family")
-	cursorStyle := c.PostForm("cursor_style")
-	shell := c.PostForm("shell")
+	// name := c.PostForm("name")
+	// address := c.PostForm("address")
+	// user := c.PostForm("user")
+	// pwd := c.PostForm("pwd")
+	// port := c.PostForm("port")
+	// fontSize := c.PostForm("font_size")
+	// background := c.PostForm("background")
+	// foreground := c.PostForm("foreground")
+	// cursorColor := c.PostForm("cursor_color")
+	// fontFamily := c.PostForm("font_family")
+	// cursorStyle := c.PostForm("cursor_style")
+	// shell := c.PostForm("shell")
+
+	var terminal models.Terminal
+	if err := c.ShouldBindJSON(terminal); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
 
 	// if len(name) > 60 || len(name) == 0 {
 	// 	return models.Terminal{}, fmt.Errorf("name input error:%s.", name)
 	// }
 
-	if len(address) > 60 || len(address) == 0 {
+	if len(terminal.Address) > 60 || len(terminal.Address) == 0 {
 		return models.Terminal{}, fmt.Errorf("terminal input error")
 	}
 
-	if len(user) > 60 || len(user) == 0 {
+	if len(terminal.User) > 60 || len(terminal.User) == 0 {
 		return models.Terminal{}, fmt.Errorf("user input error")
 	}
 
-	if len(pwd) > 60 || len(pwd) == 0 {
+	if len(terminal.Pwd) > 60 || len(terminal.Pwd) == 0 {
 		return models.Terminal{}, fmt.Errorf("pwd input error")
 	}
-	p, err := strconv.Atoi(strings.TrimSpace(port))
-	if err != nil {
-		return models.Terminal{}, fmt.Errorf("port input error")
-	}
-	if p > 65535 || p < 1 {
+	// p, err := strconv.Atoi(strings.TrimSpace(terminal.Port))
+	// if err != nil {
+	// 	return models.Terminal{}, fmt.Errorf("port input error")
+	// }
+	if terminal.Port > 65535 || terminal.Port < 1 {
 		return models.Terminal{}, fmt.Errorf("port range input error")
 	}
 
-	fontsize, err := strconv.Atoi(strings.TrimSpace(fontSize))
-	if err != nil {
-		fontsize = 16
-	}
-	if fontsize > 32 || fontsize < 8 {
-		fontsize = 16
-	}
-	if len(strings.TrimSpace(background)) == 0 {
-		background = "#000000"
-	}
+	// fontsize, err := strconv.Atoi(strings.TrimSpace(fontSize))
+	// if err != nil {
+	terminal.FontSize = 16
+	// }
+	// if fontsize > 32 || fontsize < 8 {
+	// 	fontsize = 16
+	// }
+	// if len(strings.TrimSpace(background)) == 0 {
+	terminal.Background = "#000000"
+	// }
 
-	if len(strings.TrimSpace(foreground)) == 0 {
-		foreground = "#FFFFFF"
-	}
+	// if len(strings.TrimSpace(foreground)) == 0 {
+	terminal.Foreground = "#FFFFFF"
+	// }
 
-	if len(strings.TrimSpace(cursorColor)) == 0 {
-		cursorColor = "#FFFFFF"
-	}
+	// if len(strings.TrimSpace(cursorColor)) == 0 {
+	terminal.CursorColor = "#FFFFFF"
+	// }
 
-	if len(strings.TrimSpace(fontFamily)) == 0 {
-		fontFamily = "Courier"
-	}
+	// if len(strings.TrimSpace(fontFamily)) == 0 {
+	terminal.FontFamily = "Courier"
+	// }
 
-	if len(strings.TrimSpace(cursorStyle)) == 0 {
-		cursorStyle = "block"
-	}
+	// if len(strings.TrimSpace(cursorStyle)) == 0 {
+	terminal.CursorStyle = "block"
+	// }
 
-	if len(strings.TrimSpace(shell)) == 0 {
-		shell = "bash"
-	}
+	// if len(strings.TrimSpace(shell)) == 0 {
+	terminal.Shell = "bash"
+	// }
 
-	terminal := models.Terminal{
-		Name:        name,
-		Address:     address,
-		User:        user,
-		Pwd:         pwd,
-		Port:        p,
-		FontSize:    fontsize,
-		Background:  background,
-		Foreground:  foreground,
-		CursorColor: cursorColor,
-		FontFamily:  fontFamily,
-		CursorStyle: cursorStyle,
-		Shell:       shell,
-	}
+	// terminal = models.Terminal{
+	// 	Name:        name,
+	// 	Address:     address,
+	// 	User:        user,
+	// 	Pwd:         pwd,
+	// 	Port:        p,
+	// 	FontSize:    fontsize,
+	// 	Background:  background,
+	// 	Foreground:  foreground,
+	// 	CursorColor: cursorColor,
+	// 	FontFamily:  fontFamily,
+	// 	CursorStyle: cursorStyle,
+	// 	Shell:       shell,
+	// }
 	return terminal, nil
 }
 
