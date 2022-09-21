@@ -27,7 +27,7 @@ func VerifyTerminal(c *gin.Context) (models.Terminal, error) {
 	// shell := c.PostForm("shell")
 
 	var terminal models.Terminal
-	if err := c.ShouldBindJSON(terminal); err != nil {
+	if err := c.ShouldBindJSON(&terminal); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
