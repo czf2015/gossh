@@ -12,7 +12,7 @@ import (
 // POST 登陆管理页面
 func Login(c *gin.Context) {
 	pwd := c.DefaultPostForm("pwd", "")
-	row := db.GetDB().QueryRow("select Id,Pwd from config where Id = 1")
+	row := db.GetDB().QueryRow("select Id,Pwd from login where Id = 1")
 	login := new(models.Login)
 	err := row.Scan(&login.Id, &login.Pwd)
 	if err != nil {
@@ -56,7 +56,7 @@ func RevisePassword(c *gin.Context) {
 
 	oldPwd := c.PostForm("old_pwd")
 	newPwd := c.PostForm("new_pwd")
-	row := db.GetDB().QueryRow(`select Id,Pwd from config where Id = 1`)
+	row := db.GetDB().QueryRow(`select Id,Pwd from login where Id = 1`)
 	login := new(models.Login)
 	err := row.Scan(&login.Id, &login.Pwd)
 	if err != nil {

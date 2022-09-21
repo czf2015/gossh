@@ -102,7 +102,7 @@ func init() {
 	// 	}
 
 	// 	createConfigTable := `
-	// CREATE TABLE IF NOT EXISTS 'config'
+	// CREATE TABLE IF NOT EXISTS 'login'
 	// (
 	//     'Id'          INTEGER PRIMARY KEY AUTOINCREMENT,
 	//     'Pwd'         VARCHAR(64) NOT NULL DEFAULT 'admin'

@@ -25,9 +25,9 @@ func VerifyTerminal(c *gin.Context) (models.Terminal, error) {
 	cursorStyle := c.PostForm("cursor_style")
 	shell := c.PostForm("shell")
 
-	if len(name) > 60 || len(name) == 0 {
-		return models.Terminal{}, fmt.Errorf("name input error:%s.", name)
-	}
+	// if len(name) > 60 || len(name) == 0 {
+	// 	return models.Terminal{}, fmt.Errorf("name input error:%s.", name)
+	// }
 
 	if len(address) > 60 || len(address) == 0 {
 		return models.Terminal{}, fmt.Errorf("terminal input error")
