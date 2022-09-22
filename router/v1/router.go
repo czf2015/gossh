@@ -4,10 +4,11 @@ import (
 	"fmt"
 	api "gossh/api/v1"
 	config "gossh/config/v1"
-	"gossh/libs/gin"
 	"gossh/libs/logger"
 	"gossh/middlewares"
 	"os"
+
+	"github.com/gin-gonic/gin"
 )
 
 var engine = gin.Default()

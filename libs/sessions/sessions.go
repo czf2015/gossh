@@ -4,9 +4,10 @@ import (
 	"log"
 	"net/http"
 
-	"gossh/libs/gin"
 	"gossh/libs/sessions/sessions"
 	"gossh/libs/sessions/sessions/context"
+
+	"github.com/gin-gonic/gin"
 )
 
 const (

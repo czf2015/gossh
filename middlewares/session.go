@@ -2,11 +2,12 @@ package middlewares
 
 import (
 	config "gossh/config/v1"
-	"gossh/libs/gin"
 	"gossh/libs/sessions"
 	"gossh/libs/sessions/cookie"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 func Session() gin.HandlerFunc {

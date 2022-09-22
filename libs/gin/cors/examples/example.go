@@ -3,8 +3,9 @@ package main
 import (
 	"time"
 
-	"gossh/libs/gin"
 	"gossh/libs/gin/cors"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {

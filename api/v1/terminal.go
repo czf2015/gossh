@@ -4,12 +4,13 @@ import (
 	"fmt"
 	config "gossh/config/v1"
 	"gossh/libs/clients"
-	"gossh/libs/gin"
 	models "gossh/models/v1"
 	"gossh/utils"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/gin-gonic/gin"
 )
 
 func VerifyTerminal(c *gin.Context) (models.Terminal, error) {

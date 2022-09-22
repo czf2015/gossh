@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"gossh/libs/gin"
+	"github.com/gin-gonic/gin"
 )
 
 // Config represents all available options for the middleware.

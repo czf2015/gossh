@@ -3,11 +3,12 @@ package api
 import (
 	config "gossh/config/v1"
 	"gossh/libs/clients"
-	"gossh/libs/gin"
 	"io"
 	"path"
 	"strconv"
 	"strings"
+
+	"github.com/gin-gonic/gin"
 )
 
 // GET sftp 获取指定目录下文件信息

@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"gossh/libs/gin"
+	"github.com/gin-gonic/gin"
 )
 
 type cors struct {

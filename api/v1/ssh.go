@@ -3,12 +3,13 @@ package api
 import (
 	"fmt"
 	config "gossh/config/v1"
-	"gossh/libs/gin"
 	"gossh/libs/sessions"
 	"gossh/libs/sse"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/gin-gonic/gin"
 
 	"gossh/libs/clients"
 
