@@ -1,6 +1,6 @@
 module gossh
 
-go 1.17
+go 1.16
 
 require (
 	github.com/mattn/go-sqlite3 v1.14.15
@@ -8,7 +8,4 @@ require (
 	golang.org/x/crypto v0.0.0-20220829220503-c86fa9a7ed90
 )
 
-require (
-	github.com/kr/fs v0.1.0 // indirect
-	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
-)
+require github.com/gin-gonic/gin v1.8.1
