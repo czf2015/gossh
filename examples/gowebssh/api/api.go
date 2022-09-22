@@ -6,10 +6,11 @@ import (
 	"gowebssh/models"
 	"gowebssh/utils"
 	"gowebssh/vendors/clients"
-	"gowebssh/vendors/gin"
 	"gowebssh/vendors/websocket"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 // api
