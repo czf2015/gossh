@@ -3,9 +3,9 @@ package api
 import (
 	config "gossh/config/v1"
 	"gossh/libs/db"
-	"gossh/libs/logger"
 	"gossh/libs/sessions"
 	models "gossh/models/v1"
+	"gossh/vendors/libs/logger"
 
 	"github.com/gin-gonic/gin"
 )

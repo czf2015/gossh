@@ -11,9 +11,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"gossh/libs/clients"
+	"gossh/vendors/libs/clients"
 
-	"gossh/libs/websocket"
+	"gossh/vendors/libs/websocket"
 )
 
 // GET (需要登陆认证)获取已经连接的主机信息

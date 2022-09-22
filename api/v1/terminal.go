@@ -3,9 +3,9 @@ package api
 import (
 	"fmt"
 	config "gossh/config/v1"
-	"gossh/libs/clients"
 	models "gossh/models/v1"
 	"gossh/utils"
+	"gossh/vendors/libs/clients"
 	"net/http"
 	"strconv"
 	"strings"
