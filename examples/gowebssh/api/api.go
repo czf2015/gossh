@@ -5,11 +5,11 @@ import (
 	"gowebssh/config"
 	"gowebssh/models"
 	"gowebssh/utils"
-	"gowebssh/vendors/clients"
-	"gowebssh/vendors/websocket"
 	"net/http"
 	"strconv"
 
+	clients "github.com/czf2015/gopkg-clients"
+	websocket "github.com/czf2015/gopkg-websocket"
 	"github.com/gin-gonic/gin"
 )
 

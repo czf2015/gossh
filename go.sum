@@ -1,4 +1,10 @@
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
+github.com/czf2015/gopkg-clients v0.0.0-20220922153011-4ad82e9f1f23 h1:RFUeEvib1icXh9jNnEXf+86fip9eyFvnW+hXOL7HSM0=
+github.com/czf2015/gopkg-clients v0.0.0-20220922153011-4ad82e9f1f23/go.mod h1:5XX7F5fcbcB54icLk2jZ3FImaujvZ//v+PUbLEPoDO8=
+github.com/czf2015/gopkg-log v0.0.0-20220922151031-9d9d52da1d6c h1:TjGznklYGUb3jPyvd+V3eRi6jGi6VLE1mb5qWtaXDnQ=
+github.com/czf2015/gopkg-log v0.0.0-20220922151031-9d9d52da1d6c/go.mod h1:f8V6KFvLrUTapMVzJZfBqAyjNxPSgPb41dJDFDEn5Y8=
+github.com/czf2015/gopkg-websocket v0.0.0-20220922144329-292cdef96ea0 h1:a4ieyQi6wi3e8u3F+k/sxz4iSHLFHu1H+L+wK0qpdAE=
+github.com/czf2015/gopkg-websocket v0.0.0-20220922144329-292cdef96ea0/go.mod h1:8oEjEdTb9pLRPxeSOejTdJ4ldUzWwYPPrsndgP5yhno=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

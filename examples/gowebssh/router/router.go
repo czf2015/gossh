@@ -13,5 +13,5 @@ func Run() {
 	engine.POST("/api/getSessionId", api.GetSessionId)
 	engine.GET("/ws/ssh", api.SshHandler)
 
-	engine.Run("0.0.0.0:8080")
+	engine.Run("0.0.0.0:8888")
 }
