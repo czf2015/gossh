@@ -14,19 +14,6 @@ import (
 )
 
 func VerifyTerminal(c *gin.Context) (models.Terminal, error) {
-	// name := c.PostForm("name")
-	// address := c.PostForm("address")
-	// user := c.PostForm("user")
-	// pwd := c.PostForm("pwd")
-	// port := c.PostForm("port")
-	// fontSize := c.PostForm("font_size")
-	// background := c.PostForm("background")
-	// foreground := c.PostForm("foreground")
-	// cursorColor := c.PostForm("cursor_color")
-	// fontFamily := c.PostForm("font_family")
-	// cursorStyle := c.PostForm("cursor_style")
-	// shell := c.PostForm("shell")
-
 	var terminal models.Terminal
 	if err := c.ShouldBindJSON(&terminal); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -86,20 +73,6 @@ func VerifyTerminal(c *gin.Context) (models.Terminal, error) {
 	terminal.Shell = "bash"
 	// }
 
-	// terminal = models.Terminal{
-	// 	Name:        name,
-	// 	Address:     address,
-	// 	User:        user,
-	// 	Pwd:         pwd,
-	// 	Port:        p,
-	// 	FontSize:    fontsize,
-	// 	Background:  background,
-	// 	Foreground:  foreground,
-	// 	CursorColor: cursorColor,
-	// 	FontFamily:  fontFamily,
-	// 	CursorStyle: cursorStyle,
-	// 	Shell:       shell,
-	// }
 	return terminal, nil
 }
 
