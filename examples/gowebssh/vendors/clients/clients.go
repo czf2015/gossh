@@ -3,7 +3,7 @@ package clients
 import (
 	"encoding/json"
 	"fmt"
-	"gossh/vendors/logger"
+	"gowebssh/vendors/logger"
 	"io"
 	"net"
 	"sync"
@@ -12,7 +12,7 @@ import (
 	"github.com/pkg/sftp"
 	"golang.org/x/crypto/ssh"
 
-	"gossh/vendors/websocket"
+	"gowebssh/vendors/websocket"
 )
 
 type Ssh struct {
