@@ -1,6 +1,6 @@
 package logger
 
-import "gossh/vendors/libs/log"
+import "gossh/vendors/log"
 
 var logLevel = log.Error
 

@@ -5,7 +5,7 @@ import (
 	"gossh/libs/db"
 	"gossh/libs/sessions"
 	models "gossh/models/v1"
-	"gossh/vendors/libs/logger"
+	"gossh/vendors/logger"
 
 	"github.com/gin-gonic/gin"
 )

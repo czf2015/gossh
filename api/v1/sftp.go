@@ -2,7 +2,7 @@ package api
 
 import (
 	config "gossh/config/v1"
-	"gossh/vendors/libs/clients"
+	"gossh/vendors/clients"
 	"io"
 	"path"
 	"strconv"

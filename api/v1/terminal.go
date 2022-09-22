@@ -5,7 +5,7 @@ import (
 	config "gossh/config/v1"
 	models "gossh/models/v1"
 	"gossh/utils"
-	"gossh/vendors/libs/clients"
+	"gossh/vendors/clients"
 	"net/http"
 	"strconv"
 	"strings"
