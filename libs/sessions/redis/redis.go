@@ -11,10 +11,10 @@ import (
 	"strings"
 	"time"
 
-	"gossh/libs/gin/redis"
-	gsessions "gossh/libs/gin/sessions"
-	"gossh/libs/gin/sessions/sessions"
-	"gossh/libs/gin/sessions/sessions/securecookie"
+	"gossh/libs/redis"
+	gsessions "gossh/libs/sessions"
+	"gossh/libs/sessions/sessions"
+	"gossh/libs/sessions/sessions/securecookie"
 )
 
 type Store interface {

@@ -3,8 +3,8 @@ package middlewares
 import (
 	config "gossh/config/v1"
 	"gossh/libs/gin"
-	"gossh/libs/gin/sessions"
-	"gossh/libs/gin/sessions/cookie"
+	"gossh/libs/sessions"
+	"gossh/libs/sessions/cookie"
 	"net/http"
 	"strconv"
 )

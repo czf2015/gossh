@@ -4,8 +4,8 @@ import (
 	config "gossh/config/v1"
 	"gossh/libs/db"
 	"gossh/libs/gin"
-	"gossh/libs/gin/sessions"
 	"gossh/libs/logger"
+	"gossh/libs/sessions"
 	models "gossh/models/v1"
 )
 
